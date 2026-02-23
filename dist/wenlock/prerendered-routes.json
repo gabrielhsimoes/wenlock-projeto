@@ -1,0 +1,9 @@
+{
+  "routes": {
+    "/": {},
+    "/controle-acesso": {},
+    "/controle-acesso/usuarios": {},
+    "/controle-acesso/usuarios/novo": {},
+    "/home": {}
+  }
+}
