@@ -1,0 +1,91 @@
+<div
+  class="sidebar-content h-full flex flex-col bg-[#0F1E3A] text-white shadow-md"
+  [class.items-center]="collapsed"
+>
+  <!-- Header do Sidebar -->
+  <div class="relative flex items-center justify-center p-4">
+    <!-- Logo -->
+    <div [class.hidden]="collapsed" class="p-2 text-center">
+      <img src="logo.svg" alt="Wenlock" class="w-[180px]" />
+    </div>
+
+    <div [class.hidden]="!collapsed" class="p-2 text-center">
+      <img src="logo-sidebar.svg" alt="Wenlock" class="w-[200px]" />
+    </div>
+
+    <!-- Botão do menu -->
+    <button
+      class="absolute -right-5 flex bg-white p-2 rounded-full shadow-md z-50"
+      mat-icon-button
+      (click)="toggleSidebar()"
+    >
+      <mat-icon class="text-gray-600 text-[24px]" [class.rotate-180]="collapsed"
+        >chevron_left</mat-icon
+      >
+    </button>
+  </div>
+
+  <!-- Itens de navegação -->
+  <nav class="flex-1 mt-6">
+    <ng-container *ngFor="let item of menuItems; let i = index">
+      <!-- Itens sem submenu -->
+      <a
+        *ngIf="!item.children"
+        [routerLink]="item.route"
+        routerLinkActive="bg-[#00aac1]"
+        class="flex items-center gap-4 px-6 py-3 m-4 rounded-md hover:bg-[#00606d] font-medium"
+      >
+        <img *ngIf="item.icon" [src]="item.icon" class="w-[22px]" />
+        <span *ngIf="!collapsed">{{ item.label }}</span>
+      </a>
+
+      <!-- Itens com submenu -->
+      <div *ngIf="item.children">
+        <button
+          type="button"
+          (click)="toggleItem(i)"
+          class="flex items-center gap-4 px-6 py-3 m-4 rounded-md hover:bg-[#00606d] font-medium"
+        >
+          <img *ngIf="item.icon" [src]="item.icon" class="w-[22px]" />
+          <span *ngIf="!collapsed" class="flex-1 text-left">
+            {{ item.label }}
+          </span>
+
+          <!-- setinha -->
+          <mat-icon
+            *ngIf="!collapsed"
+            class="transition-transform duration-200"
+            [class.rotate-180]="openIndex === i"
+          >
+            arrow_drop_down
+          </mat-icon>
+        </button>
+
+        <!-- Submenu -->
+        <div *ngIf="!collapsed && openIndex === i" class="ml-6">
+          <a
+            *ngFor="let child of item.children"
+            [routerLink]="child.route"
+            routerLinkActive="bg-[#00aac1]"
+            class="flex items-center gap-4 px-6 py-3 m-4 rounded-md hover:bg-[#00606d] font-medium"
+          >
+            <img *ngIf="child.icon" [src]="child.icon" class="w-[22px]" />
+            <span>{{ child.label }}</span>
+          </a>
+        </div>
+      </div>
+    </ng-container>
+  </nav>
+
+  <!-- Rodapé do Sidebar -->
+  <div class="mt-auto px-6 py-4 text-sm">
+    <div [class.hidden]="collapsed" class="flex items-center gap-2 font-semibold text-white">
+      <span class="text-lg">©</span>
+      <span>WenLock</span>
+    </div>
+
+    <div [class.hidden]="collapsed" class="text-white/60 text-xs mt-1">Powered by Conecthus</div>
+
+    <div class="text-white/40 text-xs mt-1">V 0.0.0</div>
+  </div>
+</div>

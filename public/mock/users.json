@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "Gabriel Henrique Simões do Nascimento",
+    "email": "gabriel@email.com",
+    "role": "Admin",
+    "active": true
+  },
+  {
+    "id": 2,
+    "name": "Maria da Silva Simões",
+    "email": "maria@email.com",
+    "role": "Usuário",
+    "active": false
+  }
+]

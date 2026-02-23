@@ -1,0 +1,31 @@
+<mat-sidenav-container class="h-full" [autosize]="true">
+  <!-- Sidebar -->
+  <mat-sidenav
+    mode="side"
+    opened
+    class="sidenav"
+    [style.width.px]="collapsed ? 100 : 280">
+
+    <app-sidebar [collapsed]="collapsed" (toggle)="toggleSidebar()">
+    </app-sidebar>
+  </mat-sidenav>
+
+  <!-- Conteúdo principal -->
+  <mat-sidenav-content
+    [style.marginLeft.px]="collapsed ? 100 : 280">
+
+    <!-- Toolbar Superior -->
+    <mat-toolbar class="justify-end shadow-xl" color="primary">
+      <span
+        class="p-2 rounded-full bg-[#0d1931] text-white text-sm border border-2 border-[#00aac1]"
+        >MS</span
+      >
+    </mat-toolbar>
+
+    <!-- Conteúdo -->
+    <div class="p-6 bg-[#f3f3f3] relative">
+      <router-outlet></router-outlet>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

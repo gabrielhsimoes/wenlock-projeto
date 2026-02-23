@@ -1,0 +1,239 @@
+<nav class="bc flex text-md">
+  <ng-container *ngFor="let c of crumbs; let last = last">
+    <a *ngIf="c.link && !last" [routerLink]="c.link" class="bc-link">{{
+      c.label
+    }}</a>
+    <span *ngIf="!c.link || last" class="bc-current">{{ c.label }}</span>
+
+    <mat-icon *ngIf="!last" class="bc-sep">chevron_right</mat-icon>
+  </ng-container>
+</nav>
+
+<div class="flex p-2 gap-4">
+  <!-- Botao de voltar -->
+  <button (click)="goBack()">
+    <mat-icon class="bc-sep !text-3xl">chevron_left</mat-icon>
+  </button>
+
+  <p class="font-bold text-3xl">
+    {{ editId ? "Editar Usuário" : "Cadastro de Usuário" }}
+  </p>
+</div>
+
+<!-- Form -->
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="card bg-white p-4 rounded-md shadow-md">
+    <div class="flex items-center gap-3">
+      <span class="font-bold">Dados do Usuário</span>
+      <div class="h-px flex-1 bg-gray-800"></div>
+    </div>
+
+    <br />
+    <div class="lg:grid lg:grid-cols-2 flex flex-col gap-4">
+      <!-- Nome -->
+      <mat-form-field appearance="fill">
+        <mat-label>Nome Completo</mat-label>
+        <input
+          matInput
+          placeholder="Insira o nome completo*"
+          formControlName="fullName"
+        />
+
+        <!-- Erros -->
+        <mat-error
+          *ngIf="f['fullName'].touched && f['fullName'].hasError('required')"
+        >
+          Nome é obrigatório.
+        </mat-error>
+
+        <mat-error
+          *ngIf="f['fullName'].touched && f['fullName'].hasError('pattern')"
+        >
+          Use apenas letras e espaços.
+        </mat-error>
+
+        <mat-error
+          *ngIf="f['fullName'].touched && f['fullName'].hasError('maxlength')"
+        >
+          Máximo de 30 caracteres.
+        </mat-error>
+        <mat-hint align="end">• Máx. 30 Caracteres</mat-hint>
+      </mat-form-field>
+
+      <!-- Matrícula -->
+      <mat-form-field appearance="fill">
+        <mat-label>Matrícula</mat-label>
+        <input
+          matInput
+          inputmode="numeric"
+          pattern="[0-9]*"
+          placeholder="Insira o N° da matrícula*"
+          formControlName="registration"
+        />
+
+        <!-- Erros -->
+        <mat-error
+          *ngIf="
+            f['registration'].touched && f['registration'].hasError('required')
+          "
+        >
+          Matrícula é obrigatória.
+        </mat-error>
+
+        <mat-error
+          *ngIf="
+            f['registration'].touched && f['registration'].hasError('pattern')
+          "
+        >
+          Use apenas números.
+        </mat-error>
+
+        <mat-error
+          *ngIf="
+            f['registration'].touched && f['registration'].hasError('maxlength')
+          "
+        >
+          Máximo de 10 caracteres.
+        </mat-error>
+        <mat-hint align="end">• Máx. 10 Caracteres</mat-hint>
+      </mat-form-field>
+
+      <!-- Email -->
+      <mat-form-field appearance="fill">
+        <mat-label>E-mail</mat-label>
+        <input
+          matInput
+          placeholder="Insira o E-mail*"
+          formControlName="email"
+        />
+
+        <!-- Erros -->
+        <mat-error
+          *ngIf="f['email'].touched && f['email'].hasError('required')"
+        >
+          E-mail é obrigatório.
+        </mat-error>
+
+        <mat-error *ngIf="f['email'].touched && f['email'].hasError('email')">
+          Digite um e-mail válido.
+        </mat-error>
+
+        <mat-error
+          *ngIf="f['email'].touched && f['email'].hasError('maxlength')"
+        >
+          Máximo de 40 caracteres.
+        </mat-error>
+        <mat-hint align="end">• Máx. 40 Caracteres</mat-hint>
+      </mat-form-field>
+
+      <div class="col-span-2 flex items-center gap-3">
+        <span class="font-bold">Dados de acesso</span>
+        <div class="h-px flex-1 bg-gray-800"></div>
+      </div>
+
+      <!-- Senha -->
+      <mat-form-field appearance="fill">
+        <mat-label>Senha</mat-label>
+        <input
+          matInput
+          [type]="hide() ? 'password' : 'text'"
+          placeholder="Senha"
+          formControlName="password"
+        />
+        <button
+          type="button"
+          matIconButton
+          matSuffix
+          (click)="clickEvent($event)"
+          class="p-4"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide()"
+        >
+          <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+
+        <!-- Erros -->
+        <mat-error
+          *ngIf="f['password'].touched && f['password'].hasError('required')"
+        >
+          Senha é obrigatória.
+        </mat-error>
+
+        <mat-error
+          *ngIf="f['password'].touched && f['password'].hasError('pattern')"
+        >
+          A senha deve ter exatamente 6 caracteres alfanuméricos (ex: A1b2C3).
+        </mat-error>
+
+        <mat-error
+          *ngIf="f['password'].touched && f['password'].hasError('maxlength')"
+        >
+          Máximo de 20 caracteres.
+        </mat-error>
+        <mat-hint align="end">• Máx. 20 Caracteres</mat-hint>
+      </mat-form-field>
+
+      <!-- Repetir Senha -->
+      <mat-form-field appearance="fill">
+        <mat-label>Repetir Senha</mat-label>
+        <input
+          matInput
+          [type]="hide() ? 'password' : 'text'"
+          placeholder="Repetir Senha"
+          formControlName="confirmPassword"
+        />
+        <button
+          type="button"
+          matIconButton
+          matSuffix
+          (click)="clickEvent($event)"
+          class="p-4"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide()"
+        >
+          <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+
+        <!-- Erros -->
+        <mat-error
+          *ngIf="
+            f['confirmPassword'].touched &&
+            f['confirmPassword'].hasError('required')
+          "
+        >
+          Confirmação de senha é obrigatória.
+        </mat-error>
+
+        <mat-error
+          *ngIf="
+            f['confirmPassword'].touched &&
+            f['confirmPassword'].hasError('passwordMismatch')
+          "
+        >
+          As senhas não conferem.
+        </mat-error>
+        <mat-hint align="end">• Máx. 20 Caracteres</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="flex gap-4 justify-end p-4">
+      <button
+        type="button"
+        (click)="onCancel()"
+        class="p-3 px-8 bg-white border border-[#555] rounded-lg font-semibold hover:bg-[#00606D40] transition-colors duration-300 ease-in-out"
+      >
+        Cancelar
+      </button>
+      <button
+        class="p-3 px-8 bg-[#0290a4] text-white rounded-lg font-semibold hover:bg-[#075e6b] transition-colors duration-300 ease-in-out flex items-center gap-2"
+        type="submit"
+        [disabled]="form.invalid || loading"
+        [class.opacity-50]="form.invalid || loading"
+        [class.cursor-not-allowed]="form.invalid || loading"
+      >
+        <mat-spinner *ngIf="loading" diameter="18" color="warn"></mat-spinner>
+        {{ editId ? "Atualizar" : "Cadastrar" }}
+      </button>
+    </div>
+  </div>
+</form>

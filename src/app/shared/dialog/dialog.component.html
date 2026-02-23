@@ -1,0 +1,30 @@
+<div class="p-4 py-6 text-center">
+  <!-- Título -->
+  <h2 class="text-xl font-semibold text-gray-800">
+    {{ data.title ?? "Confirmação" }}
+  </h2>
+
+  <!-- Mensagem -->
+  <div class="mt-2 text-sm text-gray-600">
+    {{ data.message }}
+  </div>
+
+  <!-- Ações -->
+  <div class="mt-6 flex justify-center gap-4">
+    <!-- Botão Não -->
+    <button
+      class="p-3 px-8 rounded-md border border-[#555] rounded-lg font-medium hover:bg-[#00606D40] transition-colors duration-300 ease-in-out"
+      (click)="close(false)"
+    >
+      {{ data.cancelText ?? "Não" }}
+    </button>
+
+    <!-- Botão Sim -->
+    <button
+      class="p-3 px-8 rounded-md bg-[#0290a4] hover:bg-[#075e6b] text-white font-medium transition-colors duration-300 ease-in-out"
+      (click)="close(true)"
+    >
+      {{ data.confirmText ?? "Sim" }}
+    </button>
+  </div>
+</div>

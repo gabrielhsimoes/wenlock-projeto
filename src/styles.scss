@@ -1,1 +1,70 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body { height: 100%; }
+body { margin: 0; font-family: "Manrope", sans-serif; }
+
+.mat-drawer,
+.mat-drawer-inner-container {
+  overflow: visible !important;
+}
+
+mat-sidenav.sidenav.mat-drawer {
+  transition: width 300ms ease !important;
+}
+
+/* colapsado */
+mat-sidenav.sidenav.collapsed.mat-drawer {
+  width: 80px !important;
+}
+
+/* Muda apenas os inputs (mat-form-field) */
+.mat-mdc-form-field {
+  --mdc-filled-text-field-focus-active-indicator-color: #0591a5;
+
+  --mdc-filled-text-field-hover-active-indicator-color: #0591a5;
+
+  --mdc-filled-text-field-focus-label-text-color: #0591a5;
+
+  --mdc-filled-text-field-caret-color: #0591a5;
+}
+
+.mat-mdc-form-field {
+  --mdc-filled-text-field-container-color: #f4f4f4;
+
+  --mdc-filled-text-field-focus-container-color: #f4f4f4;
+
+  --mdc-filled-text-field-hover-container-color: #f4f4f4;
+}
+
+.custom-dialog .mat-mdc-dialog-container {
+  border: 2px solid red;
+}
+
+.mat-mdc-dialog-component-host,
+.mat-mdc-dialog-container,
+.mat-mdc-dialog-surface {
+  border-radius: 8px !important;
+}
+
+.success-snackbar {
+  background: #16a34a !important;
+  color: #fff !important;
+  font-weight: 500;
+  border-radius: 6px !important;
+}
+
+.success-snackbar .mat-mdc-snack-bar-action {
+  color: #fff !important;
+}
+
+.success-snackbar {
+  --mdc-snackbar-container-color: #16a34a !important;
+  --mdc-snackbar-supporting-text-color: #ffffff !important;
+}
+
+.success-snackbar .mat-mdc-snack-bar-action {
+  color: #ffffff !important;
+}
